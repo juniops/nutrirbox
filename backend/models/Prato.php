@@ -71,4 +71,14 @@ class Prato extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Refeicao::className(), ['prato' => 'id']);
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeValidate()
+    {
+        $this->valor = str_replace(',','.',str_replace('.','',$this->valor) );
+        parent::beforeValidate();
+        return true;
+    }
 }

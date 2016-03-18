@@ -1,4 +1,4 @@
-# Yii 2 Starter Kit
+# Yii 2 Starter Kit - NutrirBox
 
 <!-- BADGES/ -->
 

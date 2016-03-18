@@ -11,7 +11,6 @@ use Yii;
  * @property integer $perfil
  * @property string $nome
  * @property string $email
- * @property string $senha
  * @property string $cpf
  * @property string $sexo
  * @property string $nascimento
@@ -40,12 +39,11 @@ class Cliente extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['perfil', 'email', 'senha'], 'required'],
+            [['perfil', 'email'], 'required'],
             [['perfil', 'ativo'], 'integer'],
             [['nascimento', 'data_cadastro'], 'safe'],
             [['nome', 'email'], 'string', 'max' => 100],
-            [['senha'], 'string', 'max' => 88],
-            [['cpf', 'telefone', 'celular'], 'string', 'max' => 11],
+            [['cpf', 'telefone', 'celular'], 'string', 'max' => 15],
             [['sexo'], 'string', 'max' => 1],
             [['email'], 'unique']
         ];
@@ -61,7 +59,6 @@ class Cliente extends \yii\db\ActiveRecord
             'perfil' => Yii::t('app', 'Perfil'),
             'nome' => Yii::t('app', 'Nome'),
             'email' => Yii::t('app', 'Email'),
-            'senha' => Yii::t('app', 'Senha'),
             'cpf' => Yii::t('app', 'Cpf'),
             'sexo' => Yii::t('app', 'Sexo'),
             'nascimento' => Yii::t('app', 'Nascimento'),

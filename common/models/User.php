@@ -12,24 +12,33 @@ use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
- * User model
+ * This is the model class for table "user".
  *
  * @property integer $id
  * @property string $username
- * @property string $password_hash
- * @property string $email
  * @property string $auth_key
  * @property string $access_token
+ * @property string $password_hash
  * @property string $oauth_client
  * @property string $oauth_client_user_id
- * @property string $publicIdentity
+ * @property string $email
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $logged_at
- * @property string $password write-only password
+ * @property integer $gender
+ * @property string $date_of_birth
+ * @property string $phone
+ * @property string $cell_phone
+ * @property string $cep
+ * @property string $uf
+ * @property string $city
+ * @property string $neighborhood
+ * @property string $address
  *
- * @property \common\models\UserProfile $userProfile
+ * @property Article[] $articles
+ * @property Article[] $articles0
+ * @property UserProfile $userProfile
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -111,7 +120,17 @@ class User extends ActiveRecord implements IdentityInterface
             [['username', 'email'], 'unique'],
             ['status', 'default', 'value' => self::STATUS_NOT_ACTIVE],
             ['status', 'in', 'range' => array_keys(self::statuses())],
-            [['username'],'filter','filter' => '\yii\helpers\Html::encode']
+            [['username'],'filter','filter' => '\yii\helpers\Html::encode'],
+            [['date_of_birth'], 'safe'],
+            [['username', 'auth_key'], 'string', 'max' => 32],
+            [['access_token'], 'string', 'max' => 40],
+            [['password_hash', 'oauth_client', 'oauth_client_user_id', 'email'], 'string', 'max' => 255],
+            [['phone', 'cell_phone'], 'string', 'max' => 15],
+            [['cep'], 'string', 'max' => 20],
+            [['uf'], 'string', 'max' => 2],
+            [['city'], 'string', 'max' => 100],
+            [['neighborhood'], 'string', 'max' => 50],
+            [['address'], 'string', 'max' => 150]
         ];
     }
 
@@ -128,6 +147,15 @@ class User extends ActiveRecord implements IdentityInterface
             'created_at' => Yii::t('common', 'Created at'),
             'updated_at' => Yii::t('common', 'Updated at'),
             'logged_at' => Yii::t('common', 'Last login'),
+            'gender' => Yii::t('common', 'Gender'),
+            'date_of_birth' => Yii::t('common', 'Date Of Birth'),
+            'phone' => Yii::t('common', 'Phone'),
+            'cell_phone' => Yii::t('common', 'Cell Phone'),
+            'cep' => Yii::t('common', 'Cep'),
+            'uf' => Yii::t('common', 'Uf'),
+            'city' => Yii::t('common', 'City'),
+            'neighborhood' => Yii::t('common', 'Neighborhood'),
+            'address' => Yii::t('common', 'Address'),
         ];
     }
 

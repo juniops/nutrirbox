@@ -144,21 +144,14 @@ $bundle = BackendAsset::register($this);
                             'badgeBgClass' => 'label-success',
                         ],
                         [
-                            'label' => Yii::t('backend', 'Pedido'),
+                            'label' => Yii::t('backend', 'Order'),
                             'icon' => '<i class="fa fa-calendar"></i>',
                             'url' => ['/pedido/index'],
                             'badge' => TimelineEvent::find()->today()->count(),
                             'badgeBgClass' => 'label-success',
                         ],
                         [
-                            'label' => Yii::t('backend', 'Cliente'),
-                            'icon' => '<i class="fa fa-user"></i>',
-                            'url' => ['/cliente/index'],
-                            'badge' => TimelineEvent::find()->today()->count(),
-                            'badgeBgClass' => 'label-success',
-                        ],
-                        [
-                            'label' => Yii::t('backend', 'Assinatura'),
+                            'label' => Yii::t('backend', 'Signature'),
                             'icon' => '<i class="fa fa-heart"></i>',
                             'url' => ['/assinatura/index'],
                             'badge' => TimelineEvent::find()->today()->count(),
@@ -189,7 +182,7 @@ $bundle = BackendAsset::register($this);
                             'visible' => Yii::$app->user->can('administrator')
                         ],
                         [
-                            'label' => Yii::t('backend', 'Dados Auxiliares'),
+                            'label' => Yii::t('backend', 'Auxiliary Information'),
                             'url' => '#',
                             'icon' => '<i class="fa fa-th-list"></i>',
                             'options' => ['class' => 'treeview'],

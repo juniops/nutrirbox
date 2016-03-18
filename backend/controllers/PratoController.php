@@ -36,12 +36,10 @@ class PratoController extends Controller
     {
         $searchModel = new PratoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $items = ArrayHelper::map(CategoriaBusca::find()->all(), 'id', 'categoria');
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'items'=>$items,
         ]);
     }
 

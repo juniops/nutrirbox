@@ -10,15 +10,17 @@ use yii\bootstrap\ActiveForm;
 
 <div class="prato-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'enableClientScript' => false,
+    ]); ?>
 
-    <?php echo $form->errorSummary($model); ?>
+<!--    --><?php //echo $form->errorSummary($model); ?>
 
-    <?php echo $form->field($model, 'prato')->dropDownList($itens) ?>
+    <?php echo $form->field($model, 'categoria')->dropDownList($itens) ?>
 
     <?php echo $form->field($model, 'prato')->textInput(['maxlength' => true]) ?>
 
-    <?php echo $form->field($model, 'valor')->textInput() ?>
+    <?php echo $form->field($model, 'valor')->textInput(array('class'=>'form-control moeda')) ?>
 
     <?php echo $form->field($model, 'qtd')->textInput() ?>
 

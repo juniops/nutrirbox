@@ -20,12 +20,14 @@ class BackendAsset extends AssetBundle
     ];
     public $js = [
         'js/app.js',
-        'js/custom.js'
+        'js/plugins/jquery.maskMoney.min.js',
+        'js/custom.js',
     ];
 
     public $depends = [
         'yii\web\YiiAsset',
         'common\assets\AdminLte',
+        'common\assets\AdminLtePlugins',
         'common\assets\Html5shiv'
     ];
 }

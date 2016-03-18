@@ -13,9 +13,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Clientes'), 'url
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cliente-create">
-
     <?php echo $this->render('_form', [
         'model' => $model,
     ]) ?>
-
 </div>

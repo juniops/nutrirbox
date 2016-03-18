@@ -17,6 +17,15 @@ class UserForm extends Model
     public $password;
     public $status;
     public $roles;
+    public $gender;
+    public $date_of_birth;
+    public $phone;
+    public $cell_phone;
+    public $cep;
+    public $uf;
+    public $city;
+    public $neighborhood;
+    public $address;
 
     private $model;
 
@@ -30,7 +39,7 @@ class UserForm extends Model
             ['username', 'required'],
             ['username', 'unique', 'targetClass' => User::className(), 'filter' => function ($query) {
                 if (!$this->getModel()->isNewRecord) {
-                    $query->andWhere(['not', ['id'=>$this->getModel()->id]]);
+                    $query->andWhere(['not', ['id' => $this->getModel()->id]]);
                 }
             }],
             ['username', 'string', 'min' => 2, 'max' => 255],
@@ -38,9 +47,9 @@ class UserForm extends Model
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass'=> User::className(), 'filter' => function ($query) {
+            ['email', 'unique', 'targetClass' => User::className(), 'filter' => function ($query) {
                 if (!$this->getModel()->isNewRecord) {
-                    $query->andWhere(['not', ['id'=>$this->getModel()->id]]);
+                    $query->andWhere(['not', ['id' => $this->getModel()->id]]);
                 }
             }],
 
@@ -54,6 +63,13 @@ class UserForm extends Model
                     'name'
                 )]
             ],
+            [['date_of_birth'], 'safe'],
+            [['phone', 'cell_phone'], 'string', 'max' => 15],
+            [['cep'], 'string', 'max' => 20],
+            [['uf'], 'string', 'max' => 2],
+            [['city'], 'string', 'max' => 100],
+            [['neighborhood'], 'string', 'max' => 50],
+            [['address'], 'string', 'max' => 150],
         ];
     }
 
@@ -67,7 +83,16 @@ class UserForm extends Model
             'email' => Yii::t('common', 'Email'),
             'status' => Yii::t('common', 'Status'),
             'password' => Yii::t('common', 'Password'),
-            'roles' => Yii::t('common', 'Roles')
+            'roles' => Yii::t('common', 'Roles'),
+            'gender' => Yii::t('common', 'Gender'),
+            'date_of_birth' => Yii::t('common', 'Date Of Birth'),
+            'phone' => Yii::t('common', 'Phone'),
+            'cell_phone' => Yii::t('common', 'Cell Phone'),
+            'cep' => Yii::t('common', 'CEP'),
+            'uf' => Yii::t('common', 'UF'),
+            'city' => Yii::t('common', 'City'),
+            'neighborhood' => Yii::t('common', 'Neighborhood'),
+            'address' => Yii::t('common', 'Address'),
         ];
     }
 
