@@ -16,9 +16,15 @@ class AdminLtePlugins extends AssetBundle
     public $js = [
         'input-mask/jquery.inputmask.js',
         'input-mask/jquery.inputmask.date.extensions.js',
-        'input-mask/jquery.inputmask.extensions.js'
+        'input-mask/jquery.inputmask.extensions.js',
+        'input-mask/jquery.inputmask.extensions.js',
+        'datepicker/bootstrap-datepicker.js',
+        'datepicker/locales/bootstrap-datepicker.pt-BR.js',
+        'iCheck/icheck.min.js',
     ];
-    public $css = [];
+    public $css = [
+        'iCheck/all.css',
+    ];
     public $depends = [
         'yii\web\JqueryAsset',
         'yii\bootstrap\BootstrapPluginAsset',

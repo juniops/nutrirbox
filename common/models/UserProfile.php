@@ -19,6 +19,15 @@ use trntv\filekit\behaviors\UploadBehavior;
  * @property string $avatar_base_url
  * @property integer $gender
  *
+ * @property string $date_of_birth
+ * @property string $phone
+ * @property string $cell_phone
+ * @property string $cep
+ * @property string $uf
+ * @property string $city
+ * @property string $neighborhood
+ * @property string $address
+ *
  * @property User $user
  */
 class UserProfile extends \yii\db\ActiveRecord
@@ -67,7 +76,14 @@ class UserProfile extends \yii\db\ActiveRecord
             [['firstname', 'middlename', 'lastname', 'avatar_path', 'avatar_base_url'], 'string', 'max' => 255],
             ['locale', 'default', 'value' => Yii::$app->language],
             ['locale', 'in', 'range' => array_keys(Yii::$app->params['availableLocales'])],
-            ['picture', 'safe']
+            ['picture', 'safe'],
+            [['phone', 'cell_phone'], 'string', 'max' => 15],
+            [['cep'], 'string', 'max' => 20],
+            [['uf'], 'string', 'max' => 2],
+            [['city'], 'string', 'max' => 100],
+            [['neighborhood'], 'string', 'max' => 50],
+            [['address'], 'string', 'max' => 150],
+            [['date_of_birth'], 'safe'],
         ];
     }
 
@@ -84,6 +100,14 @@ class UserProfile extends \yii\db\ActiveRecord
             'locale' => Yii::t('common', 'Locale'),
             'picture' => Yii::t('common', 'Picture'),
             'gender' => Yii::t('common', 'Gender'),
+            'date_of_birth' => Yii::t('common', 'Date Of Birth'),
+            'phone' => Yii::t('common', 'Phone'),
+            'cell_phone' => Yii::t('common', 'Cell Phone'),
+            'cep' => Yii::t('common', 'CEP'),
+            'uf' => Yii::t('common', 'UF'),
+            'city' => Yii::t('common', 'City'),
+            'neighborhood' => Yii::t('common', 'Neighborhood'),
+            'address' => Yii::t('common', 'Address'),
         ];
     }
 

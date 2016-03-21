@@ -8,16 +8,19 @@ use Yii;
  * This is the model class for table "assinatura".
  *
  * @property integer $id
+ * @property integer $user_id
  * @property integer $dias_semana
- * @property integer $qtd_refeicao
  * @property integer $qtd_suco_500
  * @property integer $qtd_suco_300
  * @property integer $qtd_sanduiche
  * @property integer $qtd_acompanhamento
+ * @property integer $qtd_salada
  * @property integer $qtd_carne
  * @property integer $qtd_dia
  * @property string $data_cadastro
+ * @property string $observacao
  *
+ * @property User $user
  * @property Pedido[] $pedidos
  */
 class Assinatura extends \yii\db\ActiveRecord
@@ -36,9 +39,10 @@ class Assinatura extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['dias_semana', 'qtd_refeicao', 'qtd_suco_500', 'qtd_suco_300', 'qtd_sanduiche', 'qtd_acompanhamento', 'qtd_carne', 'qtd_dia'], 'required'],
-            [['dias_semana', 'qtd_refeicao', 'qtd_suco_500', 'qtd_suco_300', 'qtd_sanduiche', 'qtd_acompanhamento', 'qtd_carne', 'qtd_dia'], 'integer'],
-            [['data_cadastro'], 'safe']
+            [['user_id', 'dias_semana'], 'required'],
+            [['user_id', 'dias_semana', 'qtd_suco_500', 'qtd_suco_300', 'qtd_sanduiche', 'qtd_acompanhamento', 'qtd_salada', 'qtd_carne', 'qtd_dia'], 'integer'],
+            [['data_cadastro'], 'safe'],
+            [['observacao'], 'string']
         ];
     }
 
@@ -48,17 +52,27 @@ class Assinatura extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'dias_semana' => 'Dias Semana',
-            'qtd_refeicao' => 'Qtd Refeicao',
-            'qtd_suco_500' => 'Qtd Suco 500',
-            'qtd_suco_300' => 'Qtd Suco 300',
-            'qtd_sanduiche' => 'Qtd Sanduiche',
-            'qtd_acompanhamento' => 'Qtd Acompanhamento',
-            'qtd_carne' => 'Qtd Carne',
-            'qtd_dia' => 'Qtd Dia',
-            'data_cadastro' => 'Data Cadastro',
+            'id' => Yii::t('backend', 'ID'),
+            'user_id' => Yii::t('backend', 'ID do Usuário'),
+            'dias_semana' => Yii::t('backend', 'Dias da Semana'),
+            'qtd_suco_500' => Yii::t('backend', 'Quantidade de suco(s) 500ml'),
+            'qtd_suco_300' => Yii::t('backend', 'Quantidade de suco(s) 300ml'),
+            'qtd_sanduiche' => Yii::t('backend', 'Quantidade de sanduiche(s)'),
+            'qtd_acompanhamento' => Yii::t('backend', 'Quantidade de acompanhamento(s)'),
+            'qtd_salada' => Yii::t('backend', 'Quantidade de salada(s)'),
+            'qtd_carne' => Yii::t('backend', 'Quantidade de carne(s)'),
+            'qtd_dia' => Yii::t('backend', 'Quantidade de dia(s)'),
+            'data_cadastro' => Yii::t('backend', 'Data Cadastro'),
+            'observacao' => Yii::t('backend', 'Observação'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -66,6 +80,38 @@ class Assinatura extends \yii\db\ActiveRecord
      */
     public function getPedidos()
     {
-        return $this->hasMany(Pedido::className(), ['assinatura' => 'id']);
+        return $this->hasMany(Pedido::className(), ['assinatura_id' => 'id']);
+    }
+
+    public function calcularAssinatura()
+    {
+        $this->resetQuantidades();
+        $desconto = ($this->qtd_dia >= 20 ? 25 : 15);
+
+        $valorPrato = $this->getValorPrato();
+        $valor = $this->qtd_dia * $valorPrato;
+        $valor = $valor - ($valor * $desconto) / 100;
+        return $valor;
+    }
+
+    public function resetQuantidades()
+    {
+        $this->qtd_suco_500 = (empty($this->qtd_suco_500) ? 0 : $this->qtd_suco_500);
+        $this->qtd_suco_300 = (empty($this->qtd_suco_300) ? 0 : $this->qtd_suco_300);
+        $this->qtd_sanduiche = (empty($this->qtd_sanduiche) ? 0 : $this->qtd_sanduiche);
+        $this->qtd_acompanhamento = (empty($this->qtd_acompanhamento) ? 0 : $this->qtd_acompanhamento);
+        $this->qtd_salada = (empty($this->qtd_salada) ? 0 : $this->qtd_salada);
+        $this->qtd_carne = (empty($this->qtd_carne) ? 0 : $this->qtd_carne);
+        $this->qtd_dia = (empty($this->qtd_dia) ? 0 : $this->qtd_dia);
+    }
+
+    public function getValorPrato(){
+        $valorPrato = $this->qtd_carne * 9.5 +
+            $this->qtd_acompanhamento * 2 +
+            $this->qtd_salada * 2.5 +
+            $this->qtd_sanduiche * 10.69 +
+            $this->qtd_suco_300 * 4 +
+            $this->qtd_suco_500 * 5.5;
+        return $valorPrato;
     }
 }

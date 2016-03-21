@@ -1,6 +1,6 @@
 {
-  "name": "trntv/yii2-starter-kit",
-  "description": "Yii2 Starter Kit Application Template",
+  "name": "juniops/nutrirbox",
+  "description": "Sistema para controle de pedidos",
   "keywords": [
     "yii2",
     "framework",
@@ -11,9 +11,8 @@
   ],
   "authors": [
     {
-      "name": "Eugene Terentev",
-      "email": "eugene@terentev.net",
-      "homepage": "http://terentev.net",
+      "name": "Junio Santos",
+      "email": "junio.p@gmail.com",
       "role": "Developer"
     }
   ],
@@ -48,7 +47,8 @@
     "bower-asset/html5shiv": "^3.0",
     "bower-asset/jquery-slimscroll": "^1.3",
     "bower-asset/flot": "^0.8",
-    "symfony/process": "^3.0"
+    "symfony/process": "^3.0",
+    "kartik-v/yii2-money": "*"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "^2.0.0",

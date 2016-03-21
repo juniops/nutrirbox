@@ -20,3 +20,8 @@ body .table {
   word-break: break-all;
 }
 /*# sourceMappingURL=style.map *//*# sourceMappingURL=style.map */
+
+/* custon */
+.ui-datepicker {
+  width: 18em;
+}

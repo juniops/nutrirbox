@@ -8,6 +8,7 @@ use backend\models\search\AssinaturaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * AssinaturaController implements the CRUD actions for Assinatura model.
@@ -24,6 +25,39 @@ class AssinaturaController extends Controller
                 ],
             ],
         ];
+    }
+    public function init() {
+        parent::init();
+        $this->view->jsFiles = ['@backend/views/' . $this->id . '/ajax.js'];
+        Yii::$app->assetManager->publish($this->view->jsFiles[0]);
+        $this->getView()->registerJsFile(
+            Yii::$app->assetManager->getPublishedUrl($this->view->jsFiles[0]),
+            ['yii\web\YiiAsset']
+        );
+    }
+
+    public function actionCalcular() {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $model = new Assinatura();
+            $model->load(Yii::$app->request->post());
+
+            $valor = $model->calcularAssinatura();
+            if(!empty($model->qtd_dia)){
+                $valorPorDia = $valor/$model->qtd_dia;
+                $res = array(
+                    'body'    => $this->renderAjax('calcular',['valor'=>$valor, 'model'=>$model, 'valorPorDia'=>$valorPorDia]),
+                    'success' => true,
+                );
+            }else{
+                $res = array(
+                    'body'    => '<div class="alert alert-danger">Preencha a quantidade de dias</div>',
+                    'success' => true,
+                );
+            }
+            return $res;
+        }
     }
 
     /**

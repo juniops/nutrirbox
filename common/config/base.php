@@ -1,10 +1,10 @@
 <?php
 $config = [
-    'name'=>'Yii2 Starter Kit',
-    'vendorPath'=>dirname(dirname(__DIR__)).'/vendor',
+    'name' => 'Yii2 Starter Kit',
+    'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'extensions' => require(__DIR__ . '/../../vendor/yiisoft/extensions.php'),
-    'sourceLanguage'=>'en-US',
-    'language'=>'pt-BR',
+    'sourceLanguage' => 'en-US',
+    'language' => 'pt-BR',
     'bootstrap' => ['log'],
     'components' => [
 
@@ -32,8 +32,10 @@ $config = [
             ]
         ],
 
-        'formatter'=>[
-            'class'=>'yii\i18n\Formatter'
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'thousandSeparator' => '.',
+            'decimalSeparator' => ',',
         ],
 
         'glide' => [
@@ -54,8 +56,8 @@ $config = [
             ]
         ],
 
-        'db'=>[
-            'class'=>'yii\db\Connection',
+        'db' => [
+            'class' => 'yii\db\Connection',
             'dsn' => getenv('DB_DSN'),
             'username' => getenv('DB_USERNAME'),
             'password' => getenv('DB_PASSWORD'),
@@ -67,33 +69,33 @@ $config = [
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
-                'db'=>[
+                'db' => [
                     'class' => 'yii\log\DbTarget',
                     'levels' => ['error', 'warning'],
-                    'except'=>['yii\web\HttpException:*', 'yii\i18n\I18N\*'],
-                    'prefix'=>function () {
+                    'except' => ['yii\web\HttpException:*', 'yii\i18n\I18N\*'],
+                    'prefix' => function () {
                         $url = !Yii::$app->request->isConsoleRequest ? Yii::$app->request->getUrl() : null;
                         return sprintf('[%s][%s]', Yii::$app->id, $url);
                     },
-                    'logVars'=>[],
-                    'logTable'=>'{{%system_log}}'
+                    'logVars' => [],
+                    'logTable' => '{{%system_log}}'
                 ]
             ],
         ],
 
         'i18n' => [
             'translations' => [
-                'app'=>[
+                'app' => [
                     'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath'=>'@common/messages',
+                    'basePath' => '@common/messages',
                 ],
-                '*'=> [
+                '*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath'=>'@common/messages',
-                    'fileMap'=>[
-                        'common'=>'common.php',
-                        'backend'=>'backend.php',
-                        'frontend'=>'frontend.php',
+                    'basePath' => '@common/messages',
+                    'fileMap' => [
+                        'common' => 'common.php',
+                        'backend' => 'backend.php',
+                        'frontend' => 'frontend.php',
                     ],
                     'on missingTranslation' => ['\backend\modules\i18n\Module', 'missingTranslation']
                 ],
@@ -141,7 +143,7 @@ $config = [
         ),
         'urlManagerStorage' => \yii\helpers\ArrayHelper::merge(
             [
-                'hostInfo'=>Yii::getAlias('@storageUrl')
+                'hostInfo' => Yii::getAlias('@storageUrl')
             ],
             require(Yii::getAlias('@storage/config/_urlManager.php'))
         )
@@ -149,14 +151,24 @@ $config = [
     'params' => [
         'adminEmail' => getenv('ADMIN_EMAIL'),
         'robotEmail' => getenv('ROBOT_EMAIL'),
-        'availableLocales'=>[
-            'en-US'=>'English (US)',
-            'pt-BR'=>'Português (Brasil)',
-            'ru-RU'=>'Русский (РФ)',
-            'uk-UA'=>'Українська (Україна)',
+        'availableLocales' => [
+            'en-US' => 'English (US)',
+            'pt-BR' => 'Português (Brasil)',
+            'ru-RU' => 'Русский (РФ)',
+            'uk-UA' => 'Українська (Україна)',
             'es' => 'Español',
             'zh-CN' => '简体中文',
         ],
+        'maskMoneyOptions' => [
+            'prefix' => 'R$ ',
+            'suffix' => '',
+            'affixesStay' => true,
+            'thousands' => '.',
+            'decimal' => ',',
+            'precision' => 2,
+            'allowZero' => false,
+            'allowNegative' => false,
+        ]
     ],
 ];
 
@@ -172,7 +184,7 @@ if (YII_ENV_PROD) {
 if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
-        'class'=>'yii\gii\Module'
+        'class' => 'yii\gii\Module'
     ];
 
     $config['components']['cache'] = [
