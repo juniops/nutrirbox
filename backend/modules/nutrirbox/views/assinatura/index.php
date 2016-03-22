@@ -25,10 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             'dias_semana',
-            'qtd_refeicao',
             'qtd_suco_500',
             'qtd_suco_300',
             // 'qtd_sanduiche',

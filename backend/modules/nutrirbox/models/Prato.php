@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models;
+namespace backend\modules\nutrirbox\models;
 
 use Yii;
 

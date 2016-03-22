@@ -1,18 +1,20 @@
 <?php
 
-namespace backend\controllers;
+namespace backend\modules\nutrirbox\controllers;
 
 use Yii;
-use backend\models\Categoria;
-use backend\models\search\CategoriaBusca;
+use backend\modules\nutrirbox\models\Prato;
+use backend\modules\nutrirbox\models\search\PratoSearch;
+use backend\modules\nutrirbox\models\search\CategoriaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
- * CategoriaController implements the CRUD actions for Categoria model.
+ * PratoController implements the CRUD actions for Prato model.
  */
-class CategoriaController extends Controller
+class PratoController extends Controller
 {
     public function behaviors()
     {
@@ -27,12 +29,12 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Lists all Categoria models.
+     * Lists all Prato models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CategoriaBusca();
+        $searchModel = new PratoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -42,7 +44,7 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Displays a single Categoria model.
+     * Displays a single Prato model.
      * @param integer $id
      * @return mixed
      */
@@ -54,25 +56,27 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Creates a new Categoria model.
+     * Creates a new Prato model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Categoria();
+        $model = new Prato();
+        $itens = ArrayHelper::map(CategoriaSearch::find()->all(), 'id', 'categoria');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'itens' => $itens,
             ]);
         }
     }
 
     /**
-     * Updates an existing Categoria model.
+     * Updates an existing Prato model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -80,18 +84,19 @@ class CategoriaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $itens = ArrayHelper::map(CategoriaSearch::find()->all(), 'id', 'categoria');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'itens'=> $itens,
             ]);
         }
     }
 
     /**
-     * Deletes an existing Categoria model.
+     * Deletes an existing Prato model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -104,15 +109,15 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Finds the Categoria model based on its primary key value.
+     * Finds the Prato model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Categoria the loaded model
+     * @return Prato the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Categoria::findOne($id)) !== null) {
+        if (($model = Prato::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

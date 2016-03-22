@@ -1,11 +1,11 @@
 <?php
 
-namespace backend\models\search;
+namespace backend\modules\nutrirbox\models\search;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Assinatura;
+use backend\modules\nutrirbox\models\Assinatura;
 
 /**
  * AssinaturaSearch represents the model behind the search form about `backend\models\Assinatura`.
@@ -18,7 +18,7 @@ class AssinaturaSearch extends Assinatura
     public function rules()
     {
         return [
-            [['id', 'dias_semana', 'qtd_refeicao', 'qtd_suco_500', 'qtd_suco_300', 'qtd_sanduiche', 'qtd_acompanhamento', 'qtd_carne', 'qtd_dia'], 'integer'],
+            [['id', 'dias_semana', 'qtd_suco_500', 'qtd_suco_300', 'qtd_sanduiche', 'qtd_acompanhamento', 'qtd_carne', 'qtd_dia'], 'integer'],
             [['data_cadastro'], 'safe'],
         ];
     }
@@ -54,7 +54,6 @@ class AssinaturaSearch extends Assinatura
         $query->andFilterWhere([
             'id' => $this->id,
             'dias_semana' => $this->dias_semana,
-            'qtd_refeicao' => $this->qtd_refeicao,
             'qtd_suco_500' => $this->qtd_suco_500,
             'qtd_suco_300' => $this->qtd_suco_300,
             'qtd_sanduiche' => $this->qtd_sanduiche,

@@ -1,10 +1,10 @@
 <?php
 
-namespace backend\controllers;
+namespace backend\modules\nutrirbox\controllers;
 
 use Yii;
-use backend\models\Assinatura;
-use backend\models\search\AssinaturaSearch;
+use backend\modules\nutrirbox\models\Assinatura;
+use backend\modules\nutrirbox\models\search\AssinaturaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -28,7 +28,7 @@ class AssinaturaController extends Controller
     }
     public function init() {
         parent::init();
-        $this->view->jsFiles = ['@backend/views/' . $this->id . '/ajax.js'];
+        $this->view->jsFiles = ['@backend/modules/nutrirbox/views/' . $this->id . '/ajax.js'];
         Yii::$app->assetManager->publish($this->view->jsFiles[0]);
         $this->getView()->registerJsFile(
             Yii::$app->assetManager->getPublishedUrl($this->view->jsFiles[0]),

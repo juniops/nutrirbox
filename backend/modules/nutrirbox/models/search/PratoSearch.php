@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\models\search;
+namespace backend\modules\nutrirbox\models\search;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Categoria;
+use backend\modules\nutrirbox\models\Prato;
 
 /**
- * CategoriaBusca represents the model behind the search form about `backend\models\Categoria`.
+ * PratoSearch represents the model behind the search form about `backend\models\Prato`.
  */
-class CategoriaBusca extends Categoria
+class PratoSearch extends Prato
 {
     /**
      * @inheritdoc
@@ -18,8 +18,9 @@ class CategoriaBusca extends Categoria
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['categoria'], 'safe'],
+            [['id', 'categoria', 'qtd'], 'integer'],
+            [['prato', 'descricao'], 'safe'],
+            [['valor'], 'number'],
         ];
     }
 
@@ -41,7 +42,7 @@ class CategoriaBusca extends Categoria
      */
     public function search($params)
     {
-        $query = Categoria::find();
+        $query = Prato::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -53,9 +54,13 @@ class CategoriaBusca extends Categoria
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'categoria' => $this->categoria,
+            'valor' => $this->valor,
+            'qtd' => $this->qtd,
         ]);
 
-        $query->andFilterWhere(['like', 'categoria', $this->categoria]);
+        $query->andFilterWhere(['like', 'prato', $this->prato])
+            ->andFilterWhere(['like', 'descricao', $this->descricao]);
 
         return $dataProvider;
     }
