@@ -40,7 +40,8 @@ class Assinatura extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'dias_semana'], 'required'],
-            [['user_id', 'dias_semana', 'qtd_suco_500', 'qtd_suco_300', 'qtd_sanduiche', 'qtd_acompanhamento', 'qtd_salada', 'qtd_carne', 'qtd_dia'], 'integer'],
+            [['user_id', 'qtd_suco_500', 'qtd_suco_300', 'qtd_sanduiche', 'qtd_acompanhamento', 'qtd_salada', 'qtd_carne', 'qtd_dia'], 'integer'],
+            [['dias_semana'], 'string', 'max' => 20],
             [['data_cadastro'], 'safe'],
             [['observacao'], 'string']
         ];
@@ -53,7 +54,7 @@ class Assinatura extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('backend', 'ID'),
-            'user_id' => Yii::t('backend', 'ID do Usuário'),
+            'user_id' => Yii::t('backend', 'Usuário'),
             'dias_semana' => Yii::t('backend', 'Dias da Semana'),
             'qtd_suco_500' => Yii::t('backend', 'Quantidade de suco(s) 500ml'),
             'qtd_suco_300' => Yii::t('backend', 'Quantidade de suco(s) 300ml'),
@@ -91,7 +92,7 @@ class Assinatura extends \yii\db\ActiveRecord
         $valorPrato = $this->getValorPrato();
         $valor = $this->qtd_dia * $valorPrato;
         $valor = $valor - ($valor * $desconto) / 100;
-        return $valor;
+        return round($valor);
     }
 
     public function resetQuantidades()
@@ -112,6 +113,6 @@ class Assinatura extends \yii\db\ActiveRecord
             $this->qtd_sanduiche * 10.69 +
             $this->qtd_suco_300 * 4 +
             $this->qtd_suco_500 * 5.5;
-        return $valorPrato;
+        return round($valorPrato);
     }
 }

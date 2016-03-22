@@ -126,7 +126,6 @@ $bundle = BackendAsset::register($this);
                 </div>
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <?php
-//                var_dump($this->context->route);exit;
                 echo Menu::widget([
                     'options' => ['class' => 'sidebar-menu'],
                     'linkTemplate' => '<a href="{url}">{icon}<span>{label}</span>{right-icon}{badge}</a>',
@@ -142,22 +141,23 @@ $bundle = BackendAsset::register($this);
                             'icon' => '<i class="fa fa-bar-chart-o"></i>',
                             'url' => ['/timeline-event/index'],
                             'badge' => TimelineEvent::find()->today()->count(),
-                            'badgeBgClass' => 'label-success',
+                            'badgeBgClass' => 'label-default',
                         ],
                         [
                             'label' => Yii::t('backend', 'Order'),
                             'icon' => '<i class="fa fa-calendar"></i>',
-                            'url' => ['/pedido/index'],
+                            'url' => ['/nutrirbox/pedido/index'],
                             'badge' => TimelineEvent::find()->today()->count(),
                             'badgeBgClass' => 'label-success',
+                            'active' => strpos( $this->context->route, 'nutrirbox/pedido') !== false,
                         ],
                         [
                             'label' => Yii::t('backend', 'Signature'),
                             'icon' => '<i class="fa fa-heart"></i>',
                             'url' => ['/nutrirbox/assinatura/index'],
                             'badge' => TimelineEvent::find()->today()->count(),
-                            'badgeBgClass' => 'label-success',
-                            'active' => $this->context->route == 'nutrirbox/assinatura/index',
+                            'badgeBgClass' => 'label-info',
+                            'active' => strpos( $this->context->route, 'nutrirbox/assinatura') !== false,
                         ],
                         [
                             'label' => Yii::t('backend', 'Content'),
@@ -193,13 +193,13 @@ $bundle = BackendAsset::register($this);
                                     'label' => Yii::t('backend', 'Categoria'),
                                     'url' => ['/nutrirbox/categoria/index'],
                                     'icon' => '<i class="fa fa-angle-double-right"></i>',
-                                    'active' => $this->context->route == 'nutrirbox/categoria/index',
+                                    'active' => strpos( $this->context->route, 'nutrirbox/categoria') !== false,
                                 ],
                                 [
                                     'label' => Yii::t('backend', 'Prato'),
                                     'url' => ['/nutrirbox/prato/index'],
                                     'icon' => '<i class="fa fa-angle-double-right"></i>',
-                                    'active' => $this->context->route == 'nutrirbox/prato/index',
+                                    'active' => strpos( $this->context->route, 'nutrirbox/prato') !== false,
                                 ],
                             ]
                         ],
