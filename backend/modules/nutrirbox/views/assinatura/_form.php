@@ -57,18 +57,12 @@ use yii\bootstrap\ActiveForm;
                             ]
                         );
                         ?>
+                        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <?php $this->registerJs("$('#calcularAssinatura').click(handleAjaxLink);", \yii\web\View::POS_READY); ?>
-
-    <div class="form-group">
-        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-
     <?php ActiveForm::end(); ?>
-
 </div>
+<?php $this->registerJs(" $('#calcularAssinatura').click(handleAjaxLink); ", \yii\web\View::POS_READY); ?>
