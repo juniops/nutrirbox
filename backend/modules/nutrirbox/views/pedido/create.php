@@ -4,19 +4,18 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Assinatura */
+/* @var $model backend\modules\nutrirbox\models\Pedido */
 
 $this->title = Yii::t('backend', 'Create {modelClass}', [
-    'modelClass' => 'Assinatura',
+    'modelClass' => 'Pedido',
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Assinaturas'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Pedidos'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="assinatura-create">
+<div class="pedido-create">
 
     <?php echo $this->render('_form', [
         'model' => $model,
-        'itens' => $itens
     ]) ?>
 
 </div>

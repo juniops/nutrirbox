@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models;
+namespace backend\modules\nutrirbox\models;
 
 use Yii;
 
@@ -8,15 +8,15 @@ use Yii;
  * This is the model class for table "pedido".
  *
  * @property integer $id
- * @property integer $cliente
+ * @property integer $assinatura_id
  * @property integer $transacao
- * @property integer $assinatura
  * @property string $referencia
  * @property string $cadastro
- * @property integer $ativo
+ * @property integer $status
+ * @property string $data_entrega
+ * @property string $observacao
  *
- * @property Assinatura $assinatura0
- * @property Cliente $cliente0
+ * @property Assinatura $assinatura
  * @property Transacao $transacao0
  * @property Refeicao[] $refeicaos
  */
@@ -36,10 +36,13 @@ class Pedido extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'cliente', 'transacao', 'assinatura', 'referencia', 'cadastro'], 'required'],
-            [['id', 'cliente', 'transacao', 'assinatura', 'ativo'], 'integer'],
-            [['cadastro'], 'safe'],
-            [['referencia'], 'string', 'max' => 45]
+            [['id', 'assinatura_id', 'transacao', 'referencia', 'cadastro', 'data_entrega'], 'required'],
+            [['id', 'assinatura_id', 'transacao', 'status'], 'integer'],
+            [['cadastro', 'data_entrega'], 'safe'],
+            [['observacao'], 'string'],
+            [['referencia'], 'string', 'max' => 45],
+            [['assinatura_id'], 'exist', 'skipOnError' => true, 'targetClass' => Assinatura::className(), 'targetAttribute' => ['assinatura_id' => 'id']],
+            [['transacao'], 'exist', 'skipOnError' => true, 'targetClass' => Transacao::className(), 'targetAttribute' => ['transacao' => 'transacao']],
         ];
     }
 
@@ -49,30 +52,23 @@ class Pedido extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'Código'),
-            'cliente' => Yii::t('app', 'Cliente'),
-            'transacao' => Yii::t('app', 'Transação'),
-            'assinatura' => Yii::t('app', 'Assinatura'),
-            'referencia' => Yii::t('app', 'Referencia'),
-            'cadastro' => Yii::t('app', 'Data de Cadastro'),
-            'ativo' => Yii::t('app', 'Ativo?'),
+            'id' => Yii::t('common', 'Código'),
+            'assinatura_id' => Yii::t('common', 'Assinatura ID'),
+            'transacao' => Yii::t('common', 'Transação'),
+            'referencia' => Yii::t('common', 'Referencia'),
+            'cadastro' => Yii::t('common', 'Data de Cadastro'),
+            'status' => Yii::t('common', 'Ativo?'),
+            'data_entrega' => Yii::t('common', 'Data Entrega'),
+            'observacao' => Yii::t('common', 'Observacao'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAssinatura0()
+    public function getAssinatura()
     {
-        return $this->hasOne(Assinatura::className(), ['id' => 'assinatura']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCliente0()
-    {
-        return $this->hasOne(Cliente::className(), ['id' => 'cliente']);
+        return $this->hasOne(Assinatura::className(), ['id' => 'assinatura_id']);
     }
 
     /**
@@ -89,5 +85,14 @@ class Pedido extends \yii\db\ActiveRecord
     public function getRefeicaos()
     {
         return $this->hasMany(Refeicao::className(), ['pedido' => 'id']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return PedidoQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new PedidoQuery(get_called_class());
     }
 }

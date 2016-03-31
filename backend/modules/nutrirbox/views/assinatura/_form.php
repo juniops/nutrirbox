@@ -33,6 +33,7 @@ use yii\bootstrap\ActiveForm;
                 <div class="box-body">
                     <?php echo $form->field($model, 'qtd_dia')->textInput(['class' => 'form-control numero', 'maxlength' => 3]) ?>
                     <?php echo $form->field($model, 'dias_semana')->inline(true)->checkboxList([2=>'segunda',3=>'terça',4=>'quarta',5=>'quinta',6=>'sexta'],['class' => 'form-control numero', 'maxlength' => 3]) ?>
+                    <?php echo $form->field($model, 'user_id')->dropDownList($itens) ?>
                     <?php echo $form->field($model, 'observacao')->textarea(['rows' => 6]) ?>
                 </div>
             </div>
