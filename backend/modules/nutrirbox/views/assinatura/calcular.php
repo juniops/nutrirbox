@@ -48,6 +48,18 @@
                 ]);
                 ?>
             </li>
+            <br>
+            <li class="text-info bigger-110">
+                <i class="ace-icon fa fa-money"></i>
+                <b>Valor Total da Assinatura com frete:</b>
+                <?php
+                echo MaskMoney::widget([
+                    'name' => 'currency',
+                    'value' => $valor + ($model->qtd_dia * 3),
+                    'disabled' => true
+                ]);
+                ?>
+            </li>
         </ul>
     </div>
 </div>

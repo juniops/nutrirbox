@@ -87,11 +87,12 @@ class Assinatura extends \yii\db\ActiveRecord
     public function calcularAssinatura()
     {
         $this->resetQuantidades();
-        $desconto = ($this->qtd_dia >= 20 ? 25 : 15);
+//        $desconto = ($this->qtd_dia >= 20 ? 25 : 15);
+        $frete = ($this->qtd_dia * 3);
 
         $valorPrato = $this->getValorPrato();
         $valor = $this->qtd_dia * $valorPrato;
-        $valor = $valor - ($valor * $desconto) / 100;
+        $valor = $valor - ($valor * 5) / 100;
         return round($valor);
     }
 
@@ -107,10 +108,10 @@ class Assinatura extends \yii\db\ActiveRecord
     }
 
     public function getValorPrato(){
-        $valorPrato = $this->qtd_carne * 9.5 +
-            $this->qtd_acompanhamento * 2 +
-            $this->qtd_salada * 2.5 +
-            $this->qtd_sanduiche * 10.69 +
+        $valorPrato = $this->qtd_carne * 7.4 +
+            $this->qtd_acompanhamento * 1.88 +
+            $this->qtd_salada * 3.5 +
+            $this->qtd_sanduiche * 9.13 +
             $this->qtd_suco_300 * 4 +
             $this->qtd_suco_500 * 5.5;
         return round($valorPrato);
